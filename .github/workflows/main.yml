@@ -1,0 +1,21 @@
+name: Unit Tests & Lint
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby 2.6
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+      - name: Bundle install
+        run: |
+          gem install bundler
+          bundle install
+      - name: Rubocop
+        run: bundle exec rubocop
+      - name: RSpec
+        run: bundle exec rspec
